@@ -85,8 +85,7 @@ public class PhoneBookManager {
 		case inputtype.GENERAL:
 			
 			PhoneInfo info = new PhoneInfo(n, p);
-			phoneInfoArr.add(info);
-			
+			phoneInfoArr.add(info);			
 			break;
 		case inputtype.SCHOOL:
 			System.out.print("전공: ");
@@ -134,11 +133,19 @@ public class PhoneBookManager {
 		System.out.println("이름 :");
 		String n = scan.nextLine();
 		
+		boolean find = false;
 		for(PhoneInfo pi : phoneInfoArr) {
 			if(pi.name.equals(n)) {
 				phoneInfoArr.remove(pi);
 				System.out.println(n + "이(가) 삭제되었습니다.");
+				find = true;
 			}
+		}
+		
+		if(find==false) {
+			NullPointerException ex = new NullPointerException();
+			throw ex;
+			
 		}
 		
 	}//end of dataDelete

@@ -129,18 +129,23 @@ public class PhoneBookManager {
 		System.out.println("이름 :");
 		String n = scan.nextLine();
 		
-		
-			
-		
-		
+		boolean find = false;
 		for(int i= 0; i<numFriend; i++) {
 			if(phoneInfoArr[i].name.equals(n)) {
 				for(int j = i; j<numFriend-1;j++) {
 					phoneInfoArr[j] = phoneInfoArr[j+1];
+					find = true;
 				}
 				numFriend--;
 			}
 		}
+		if(find==false) {
+			NullPointerException ex = new NullPointerException();
+			throw ex;
+			
+		}
+		
+		
 		
 	}//end of dataDelete
 	

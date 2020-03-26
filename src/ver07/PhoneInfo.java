@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PhoneInfo {
 	String name;
-	String phoneNumber; 
+	String phoneNumber;
 
 	public PhoneInfo(String name, String phoneNumber) {
 		this.name = name;
@@ -23,13 +23,12 @@ public class PhoneInfo {
 				"\n전화번호: " + phoneNumber;
 	}
 	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+//		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		return result;
 	}
 
@@ -42,25 +41,15 @@ public class PhoneInfo {
 			System.out.println("중복된 이름이 있습니다.");
 			System.out.println("덮어씌우려면 (1), 다시 입력하시려면 (0) 을 입력하세요.");
 			int num = scan.nextInt();
-			
-			
+			scan.nextLine();
 			if(num==1) {
-				
-				return false;
+				cmpPhone.name = this.name;
+				cmpPhone.phoneNumber = this.phoneNumber;
 			}
-			else {
-				return true;
-			}
-			
+			return true;
 		}
 		else {
 			return false;
 		}
-		
-		
-		
 	}
-	
-	
-	
 }
