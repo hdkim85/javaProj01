@@ -68,9 +68,33 @@ public class PhoneBookManager {
 				scan.nextLine();
 			} catch (NullPointerException e) {
 				System.out.println("검색결과가 없습니다.");
+			} catch (Exception e) {
+				System.out.println("예상치못한 예외가 발생하였습니다.");
+				e.printStackTrace();
 			}
 		}
 	}
+	
+	private void phbookadd(PhoneInfo info) {
+		if(info instanceof PhoneSchoolInfo) {
+			info = (PhoneSchoolInfo) info;
+		}
+		else if(info instanceof PhoneCompanyInfo) {
+			info = (PhoneCompanyInfo) info;
+		}
+		
+		if(!phoneInfoArr.add(info)) {
+			System.out.println("중복된 값이 있습니다.");
+			System.out.println("덮어쓰기(1) : 다시입력(0)");
+			int num = scan.nextInt();
+			scan.nextLine();
+			if(num==1) {
+				phoneInfoArr.remove(info);
+				phoneInfoArr.add(info);	
+			}
+		}
+	}
+	
 	
 	public void dataInput(int choice) {
 //		-저장 : 이름, 전화번호, 생년월일 정보를 대상으로 저장의 과정을 진행한다.
@@ -83,23 +107,22 @@ public class PhoneBookManager {
 		
 		switch (choice) {
 		case inputtype.GENERAL:
-			
-			PhoneInfo info = new PhoneInfo(n, p);
-			phoneInfoArr.add(info);			
+			PhoneInfo info1 = new PhoneInfo(n, p);
+			phbookadd(info1);
 			break;
 		case inputtype.SCHOOL:
 			System.out.print("전공: ");
 			m = scan.nextLine();
 			System.out.print("학년: ");
 			g = scan.nextLine();
-			PhoneSchoolInfo phoneSchoolInfo = new PhoneSchoolInfo(n, p, m, g);
-			phoneInfoArr.add(phoneSchoolInfo);
+			PhoneSchoolInfo Info2 = new PhoneSchoolInfo(n, p, m, g);
+			phbookadd(Info2);
 			break;
 		case inputtype.COMPANY:
-			System.out.println("회사: ");
+			System.out.print("회사: ");
 			c = scan.nextLine();
-			PhoneCompanyInfo phoneCompanyInfo = new PhoneCompanyInfo(n, p, c);
-			phoneInfoArr.add(phoneCompanyInfo);
+			PhoneCompanyInfo Info3 = new PhoneCompanyInfo(n, p, c);
+			phbookadd(Info3);
 			break;
 		}
 	}
@@ -131,15 +154,19 @@ public class PhoneBookManager {
 		
 		System.out.println("삭제할 이름을 입력하시오");
 		System.out.println("이름 :");
-		String n = scan.nextLine();
+		String delN = scan.nextLine();
 		
 		boolean find = false;
-		for(PhoneInfo pi : phoneInfoArr) {
-			if(pi.name.equals(n)) {
+		Iterator<PhoneInfo> itr = phoneInfoArr.iterator();
+		
+		if(itr.hasNext()) {
+			PhoneInfo pi = itr.next();
+			if(pi.name.equals(delN)) {
 				phoneInfoArr.remove(pi);
-				System.out.println(n + "이(가) 삭제되었습니다.");
+				System.out.println(delN + "이(가) 삭제되었습니다.");
 				find = true;
 			}
+			
 		}
 		
 		if(find==false) {
