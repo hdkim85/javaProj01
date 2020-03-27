@@ -1,7 +1,11 @@
-package ver07;
+package ver08;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.InputMismatchException;
@@ -9,6 +13,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class PhoneBookManager{
+
+	
 	
 	int numFriend;
 	HashSet<PhoneInfo> phoneInfoArr;
@@ -16,10 +22,17 @@ public class PhoneBookManager{
 	Scanner scan = new Scanner(System.in);
 	
 	public PhoneBookManager() {
-		phoneInfoArr = new HashSet<PhoneInfo>();
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/ver08/phonebook.obj"));
+			phoneInfoArr = (HashSet<PhoneInfo>) in.readObject();
+		} catch (Exception e) {
+			phoneInfoArr = new HashSet<PhoneInfo>();
+		}
+		
 	}
 	
 	public void printMenu() {
+		
 		
 		while(true) {
 			
@@ -57,7 +70,25 @@ public class PhoneBookManager{
 						break;
 					case menu.EXIT:
 						System.out.println("프로그램을 종료합니다.");
-						System.exit(0);
+						try {
+							ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/ver08/phonebook.obj"));
+//							Iterator<PhoneInfo> itr = phoneInfoArr.iterator();
+//							while(itr.hasNext()) {
+//								System.out.println(itr.toString());
+//								out.writeObject(itr.next());
+//							}
+							out.writeObject(phoneInfoArr);
+							out.close();
+							System.exit(0);
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+							System.out.println("저장되지않았습니다. 종료하시겠습니까?예 :(1) 아니오 :(0)");
+							int num = scan.nextInt();
+							scan.nextLine();
+							if(num==1)
+								System.exit(0);
+						} 
 					}
 				}
 				else {
@@ -134,7 +165,6 @@ public class PhoneBookManager{
 		
 		System.out.print("검색할 이름을 입력하세요 이름: ");
 		String n = scan.nextLine();
-		
 		boolean find = false;
 		Iterator<PhoneInfo> itr = phoneInfoArr.iterator();
 		

@@ -1,9 +1,9 @@
-package ver07;
+package ver08;
 
 import java.io.Serializable;
 import java.util.Scanner;
 
-public class PhoneInfo{
+public class PhoneInfo implements Serializable{
 	String name;
 	String phoneNumber;
 
