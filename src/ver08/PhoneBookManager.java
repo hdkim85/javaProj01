@@ -25,6 +25,7 @@ public class PhoneBookManager{
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/ver08/phonebook.obj"));
 			phoneInfoArr = (HashSet<PhoneInfo>) in.readObject();
+			in.close();
 		} catch (Exception e) {
 			phoneInfoArr = new HashSet<PhoneInfo>();
 		}
@@ -81,7 +82,7 @@ public class PhoneBookManager{
 							out.close();
 							System.exit(0);
 							
-						} catch (Exception e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 							System.out.println("저장되지않았습니다. 종료하시겠습니까?예 :(1) 아니오 :(0)");
 							int num = scan.nextInt();
