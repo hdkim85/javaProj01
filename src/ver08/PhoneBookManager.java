@@ -215,7 +215,10 @@ public class PhoneBookManager{
 	public void dataAllShow() {
 		
 		for (PhoneInfo pi : phoneInfoArr) {
+			System.out.println("###################");
 			System.out.println(pi.toString());
+			System.out.println("###################");
+			System.out.println();
 		}
 	}
 }

@@ -26,6 +26,11 @@ public class PhoneBookVer02 {
 					System.out.print("생년월일: ");
 					String birth =  scan.nextLine();
 					
+					if(birth.isEmpty()) {
+						birth = null;
+					}
+					
+					
 					PhoneInfo p = new PhoneInfo(name, phoneNum,
 							birth);
 					p.showPhoneInfo();
